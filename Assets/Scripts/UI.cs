@@ -31,8 +31,11 @@ public class UI : MonoBehaviour
         };
         btnPlan.clicked += () =>
         {
-            Debug.Log("btnPlan.clicked");
-            viewPoint = Instantiate(myPrefab, new Vector3(0, 2, 0), Quaternion.identity);
+            if (!viewPoint)
+            {
+                Debug.Log("btnPlan.clicked");
+                viewPoint = Instantiate(myPrefab, new Vector3(0, 2, 0), Quaternion.identity);
+            }
         };
     }
 
