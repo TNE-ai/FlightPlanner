@@ -1,0 +1,5 @@
+Button {
+    color: rgba(29, 29, 15, 255);
+    min-width: 80px;
+    background-color: rgba(230, 231, 149, 0.65);
+}
