@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 public class UI : MonoBehaviour
 {
     public GameObject myPrefab;
+    public GameObject viewPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +23,16 @@ public class UI : MonoBehaviour
         btnClear.clicked += () =>
         {
             Debug.Log("btnClear.clicked");
+            if (viewPoint)
+            {
+                Destroy(viewPoint);
+                viewPoint = null;
+            }
         };
         btnPlan.clicked += () =>
         {
             Debug.Log("btnPlan.clicked");
-            Instantiate(myPrefab, new Vector3(0, 2, 0), Quaternion.identity);
+            viewPoint = Instantiate(myPrefab, new Vector3(0, 2, 0), Quaternion.identity);
         };
     }
 
