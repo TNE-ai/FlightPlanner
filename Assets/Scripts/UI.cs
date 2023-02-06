@@ -37,8 +37,10 @@ public class UI : MonoBehaviour
             if (viewPoints.Length == 0)
             {
                 Debug.Log("btnPlan.clicked");
-                viewPoints = new GameObject[1];
+                viewPoints = new GameObject[3];
                 viewPoints[0] = Instantiate(myPrefab, new Vector3(0, 2, 0), Quaternion.identity);
+                viewPoints[1] = Instantiate(myPrefab, new Vector3(1, 2, 0), Quaternion.identity);
+                viewPoints[2] = Instantiate(myPrefab, new Vector3(0, 2, 1), Quaternion.identity);
             }
         };
     }
