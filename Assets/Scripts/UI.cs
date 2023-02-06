@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 public class UI : MonoBehaviour
-{ 
+{
+    public GameObject myPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,7 @@ public class UI : MonoBehaviour
         btnPlan.clicked += () =>
         {
             Debug.Log("btnPlan.clicked");
+            Instantiate(myPrefab, new Vector3(0, 2, 0), Quaternion.identity);
         };
     }
 
