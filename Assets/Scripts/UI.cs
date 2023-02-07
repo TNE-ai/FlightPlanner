@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+[System.Serializable]
+public class MissionItem
+{
+    public float Altitude;
+    public int AltitudeMode;
+    public bool autoContinue;
+    public int command;
+    public int doJumpId;
+    public int frame;
+}
 
 [System.Serializable]
 public class Mission
@@ -13,6 +23,7 @@ public class Mission
     public int hoverSpeed;
     public int vehicleType;
     public int version;
+    public MissionItem[] items;
 }
 
 [System.Serializable]
@@ -42,6 +53,8 @@ public class UI : MonoBehaviour
         Debug.Log("fileType:" + plan.fileType);
         Debug.Log("groundStation:" + plan.groundStation);
         Debug.Log("mission.cruiseSpeed:" + plan.mission.cruiseSpeed);
+        Debug.Log("mission.items:" + plan.mission.items.Length);
+        Debug.Log("mission.items[0].Altitude:" + plan.mission.items[0].Altitude);
 
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
         Button btnClear = root.Q<Button>("ButtonClear");
