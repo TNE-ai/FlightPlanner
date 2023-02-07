@@ -1,3 +1,4 @@
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -99,7 +100,10 @@ public class UI : MonoBehaviour
         };
         btnSave.clicked += () =>
         {
-            Debug.Log("btnSave");
+            string saveFile = Application.persistentDataPath + "/generated.plan";
+            Debug.Log("btnSave:" + saveFile);
+            string jsonString = JsonUtility.ToJson(plan);
+            File.WriteAllText(saveFile, jsonString);
         };
     }
 
