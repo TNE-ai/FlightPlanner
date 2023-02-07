@@ -3,20 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+
+[System.Serializable]
+public class FlightPlan
+{
+    public string fileType;
+}
+
 public class UI : MonoBehaviour
 {
     public GameObject myPrefab;
     public GameObject[] viewPoints = new GameObject[0];
+    public TextAsset planFile;
 
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     private void OnEnable()
     {
         Debug.Log("onEnable");
+        FlightPlan plan = JsonUtility.FromJson<FlightPlan>(planFile.text);
+        Debug.Log("fileType:" + plan.fileType);
+
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
         Button btnClear = root.Q<Button>("ButtonClear");
         Button btnPlan = root.Q<Button>("ButtonPlan");
