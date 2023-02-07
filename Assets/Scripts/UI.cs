@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+// https://dev.qgroundcontrol.com/master/en/file_formats/plan.html
 [System.Serializable]
 public class MissionItem
 {
+    public object AMSLAltAboveTerrain;
     public float Altitude;
     public int AltitudeMode;
     public bool autoContinue;
     public int command;
     public int doJumpId;
     public int frame;
+    public int[] param;
+    public string type;
 }
 
 [System.Serializable]
@@ -55,6 +59,7 @@ public class UI : MonoBehaviour
         Debug.Log("mission.cruiseSpeed:" + plan.mission.cruiseSpeed);
         Debug.Log("mission.items:" + plan.mission.items.Length);
         Debug.Log("mission.items[0].Altitude:" + plan.mission.items[0].Altitude);
+        Debug.Log("mission.items[0].AMSLAltAboveTerrain:" + plan.mission.items[0].AMSLAltAboveTerrain);
 
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
         Button btnClear = root.Q<Button>("ButtonClear");
