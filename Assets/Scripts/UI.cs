@@ -5,9 +5,23 @@ using UnityEngine.UIElements;
 
 
 [System.Serializable]
+public class Mission
+{
+    public int cruiseSpeed;
+    public int firmwareType;
+    public int globalPlanAltitudeMode;
+    public int hoverSpeed;
+    public int vehicleType;
+    public int version;
+}
+
+[System.Serializable]
 public class FlightPlan
 {
     public string fileType;
+    public string groundStation;
+    public Mission mission;
+    public int version;
 }
 
 public class UI : MonoBehaviour
@@ -26,6 +40,8 @@ public class UI : MonoBehaviour
         Debug.Log("onEnable");
         FlightPlan plan = JsonUtility.FromJson<FlightPlan>(planFile.text);
         Debug.Log("fileType:" + plan.fileType);
+        Debug.Log("groundStation:" + plan.groundStation);
+        Debug.Log("mission.cruiseSpeed:" + plan.mission.cruiseSpeed);
 
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
         Button btnClear = root.Q<Button>("ButtonClear");
