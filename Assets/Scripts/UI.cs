@@ -37,16 +37,17 @@ public class UI : MonoBehaviour
             if (viewPoints.Length == 0)
             {
                 Debug.Log("btnPlan.clicked");
-                int count = 12;
-                float radius = 2;
+                int count = 24;
+                float radius = 3;
                 viewPoints = new GameObject[count * 2];
                 for (int i=0; i<count; i++)
                 {
                     float angle = Mathf.PI * 2 / (float)count * (float)i;
                     float x = Mathf.Cos(angle) * radius;
                     float y = Mathf.Sin(angle) * radius;
-                    viewPoints[i] = Instantiate(myPrefab, new Vector3(x, 2, y), Quaternion.identity);
-                    viewPoints[count + i] = Instantiate(myPrefab, new Vector3(x, 3, y), Quaternion.identity);
+                    Quaternion q = Quaternion.LookRotation(new Vector3(-x, 2, -y));
+                    viewPoints[i] = Instantiate(myPrefab, new Vector3(x, (float)2.5, y), q);
+                    viewPoints[count + i] = Instantiate(myPrefab, new Vector3(x, (float)3.5, y), q);
                 }
             }
         };
