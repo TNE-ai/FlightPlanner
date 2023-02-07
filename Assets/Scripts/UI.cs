@@ -102,7 +102,9 @@ public class UI : MonoBehaviour
         {
             string saveFile = Application.persistentDataPath + "/generated.plan";
             Debug.Log("btnSave:" + saveFile);
+            plan.groundStation = "Netdrone Planner 1";
             string jsonString = JsonUtility.ToJson(plan);
+            jsonString = jsonString.Replace("param", "params");
             File.WriteAllText(saveFile, jsonString);
         };
     }
