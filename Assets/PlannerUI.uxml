@@ -2,8 +2,8 @@
     <Style src="project://database/Assets/Button.uss?fileID=7433441132597879392&amp;guid=940ece922fe3d452c8af5fb5415db3da&amp;type=3#Button" />
     <ui:VisualElement name="VisualElement" style="justify-content: flex-end; flex-direction: column-reverse;">
         <ui:VisualElement name="UIElements" style="height: 37px; width: 449px; flex-direction: row;">
-            <ui:Button text="Clear" display-tooltip-when-elided="true" />
-            <ui:Button text="Plan" display-tooltip-when-elided="true" />
+            <ui:Button text="Clear" display-tooltip-when-elided="true" name="ButtonClear" />
+            <ui:Button text="Plan" display-tooltip-when-elided="true" name="ButtonPlan" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
