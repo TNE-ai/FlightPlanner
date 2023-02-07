@@ -44,6 +44,7 @@ public class UI : MonoBehaviour
     public GameObject myPrefab;
     public GameObject[] viewPoints = new GameObject[0];
     public TextAsset planFile;
+    public FlightPlan plan;
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +54,7 @@ public class UI : MonoBehaviour
     private void OnEnable()
     {
         Debug.Log("onEnable");
-        FlightPlan plan = JsonUtility.FromJson<FlightPlan>(planFile.text);
+        plan = JsonUtility.FromJson<FlightPlan>(planFile.text);
         Debug.Log("fileType:" + plan.fileType);
         Debug.Log("groundStation:" + plan.groundStation);
         Debug.Log("mission.cruiseSpeed:" + plan.mission.cruiseSpeed);
@@ -64,6 +65,7 @@ public class UI : MonoBehaviour
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
         Button btnClear = root.Q<Button>("ButtonClear");
         Button btnPlan = root.Q<Button>("ButtonPlan");
+        Button btnSave = root.Q<Button>("ButtonSave");
         btnClear.clicked += () =>
         {
             Debug.Log("btnClear.clicked");
@@ -94,6 +96,10 @@ public class UI : MonoBehaviour
                     viewPoints[count + i] = Instantiate(myPrefab, new Vector3(x, (float)3.5, y), q);
                 }
             }
+        };
+        btnSave.clicked += () =>
+        {
+            Debug.Log("btnSave");
         };
     }
 

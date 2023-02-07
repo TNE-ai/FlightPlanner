@@ -4,6 +4,7 @@
         <ui:VisualElement name="UIElements" style="height: 37px; width: 449px; flex-direction: row;">
             <ui:Button text="Clear" display-tooltip-when-elided="true" name="ButtonClear" />
             <ui:Button text="Plan" display-tooltip-when-elided="true" name="ButtonPlan" />
+            <ui:Button text="Save" display-tooltip-when-elided="true" name="ButtonSave" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
