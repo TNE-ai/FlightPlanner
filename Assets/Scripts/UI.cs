@@ -8,14 +8,14 @@ using UnityEngine.UIElements;
 [System.Serializable]
 public class MissionItem
 {
-    public object AMSLAltAboveTerrain;
+    public int AMSLAltAboveTerrain; // HACK: force null
     public float Altitude;
     public int AltitudeMode;
     public bool autoContinue;
     public int command;
     public int doJumpId;
     public int frame;
-    public int[] param;
+    public float[] param; // HACK: params is reserved
     public string type;
 }
 
@@ -29,14 +29,32 @@ public class Mission
     public int vehicleType;
     public int version;
     public MissionItem[] items;
+    public float[] plannedHomePosition;
+}
+
+[System.Serializable]
+public class GeoFence
+{
+    public float[] circles;
+    public float[] polygons;
+    public int version;
+}
+
+[System.Serializable]
+public class RallyPoints
+{
+    public float[] points;
+    public int version;
 }
 
 [System.Serializable]
 public class FlightPlan
 {
     public string fileType;
+    public GeoFence geoFence;
     public string groundStation;
     public Mission mission;
+    public RallyPoints rallyPoints;
     public int version;
 }
 
@@ -46,11 +64,8 @@ public class UI : MonoBehaviour
     public GameObject[] viewPoints = new GameObject[0];
     public TextAsset planFile;
     public FlightPlan plan;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+    public float lati = (float)47.6347922956;
+    public float longi = (float)-122.24058493262723;
 
     private void OnEnable()
     {
@@ -100,18 +115,28 @@ public class UI : MonoBehaviour
         };
         btnSave.clicked += () =>
         {
+            if (viewPoints.Length == 0)
+            {
+                return;
+            }
+            MissionItem item = plan.mission.items[0]; // Template
+            item.AMSLAltAboveTerrain = 1122334455;
+            plan.mission.items = new MissionItem[viewPoints.Length];
+            for (int i=0; i<viewPoints.Length; i++)
+            {
+                GameObject vp = viewPoints[i];
+                item.param = new float[] { 0, 0, 0, 90, lati, longi, 2 };
+                plan.mission.items[i] = item;
+            }
+
             string saveFile = Application.persistentDataPath + "/generated.plan";
             Debug.Log("btnSave:" + saveFile);
             plan.groundStation = "Netdrone Planner 1";
             string jsonString = JsonUtility.ToJson(plan);
-            jsonString = jsonString.Replace("param", "params");
+            jsonString = jsonString.Replace("param", "params"); // hack
+            jsonString = jsonString.Replace("1122334455", "null"); // hack
             File.WriteAllText(saveFile, jsonString);
         };
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
