@@ -87,6 +87,7 @@ public class UI : MonoBehaviour
     public int count = 16;
     public float radius1 = 3;
     public float radius2 = 3.5f;
+    public bool twoRows = true;
     public float height1 = 2.5f;
     public float height2 = 3.5f;
     public float hold = 2.0f;
@@ -124,7 +125,7 @@ public class UI : MonoBehaviour
         {
             Debug.Log("btnPlan.clicked");
             clear();
-            viewPoints = new GameObject[count * 2];
+            viewPoints = new GameObject[count * (twoRows ? 2 : 1)];
             for (int i=0; i<count; i++)
             {
                 float angle = 2 * MathF.PI / 2 - MathF.PI * 2 / (float)count * (float)i; // Start from South
@@ -132,7 +133,10 @@ public class UI : MonoBehaviour
                 float y = MathF.Cos(angle);
                 Quaternion q = Quaternion.LookRotation(new Vector3(-x, 1, -y));
                 viewPoints[i] = Instantiate(myPrefab, new Vector3(x * radius1, height1, y * radius1), q);
-                viewPoints[count + i] = Instantiate(myPrefab, new Vector3(x * radius2, height2, y * radius2), q);
+                if (twoRows)
+                {
+                    viewPoints[count + i] = Instantiate(myPrefab, new Vector3(x * radius2, height2, y * radius2), q);
+                }
             }
         };
         btnSave.clicked += () =>
