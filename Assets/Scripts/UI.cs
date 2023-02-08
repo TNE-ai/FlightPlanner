@@ -26,7 +26,7 @@ public class Mission
     public int cruiseSpeed;
     public int firmwareType;
     public int globalPlanAltitudeMode;
-    public int hoverSpeed;
+    public float hoverSpeed;
     public int vehicleType;
     public int version;
     public MissionItem[] items;
@@ -90,6 +90,7 @@ public class UI : MonoBehaviour
     public float height1 = 2.5f;
     public float height2 = 3.5f;
     public float hold = 2.0f;
+    public float speed = 0.22352f;
 
     private void clear()
     {
@@ -150,21 +151,37 @@ public class UI : MonoBehaviour
             Vector3 homePos = viewPoints[0].transform.position;
             GeoLocation home = new GeoLocation(center, homePos.x * 1.5f, homePos.z * 1.5f);
             plan.mission.plannedHomePosition = new double[] { home.lati, home.longi, homePos.y };
+            plan.mission.hoverSpeed = speed;
             plan.mission.items = new MissionItem[viewPoints.Length];
+
+            // NAV_TAKEOFF
+            MissionItem item = JsonUtility.FromJson<MissionItem>(strItem);
+            item.command = 22;
+            itemTemplate.Altitude = homePos.y;
+            item.param = new double[] { hold, 0, 0, 0, home.lati, home.longi, homePos.y };
+            item.doJumpId = 1;
+
+            /*
+            // CHANGE_SPEED
+            item = JsonUtility.FromJson<MissionItem>(strItem);
+            item.command = 178;
+            itemTemplate.Altitude = homePos.y;
+            item.param = new double[] { 1, speed, -1, 0, 0, 0 };
+            item.doJumpId = 2;
+            */
+
             for (int i=0; i<viewPoints.Length; i++)
             {
-                MissionItem item = JsonUtility.FromJson<MissionItem>(strItem);
+                item = JsonUtility.FromJson<MissionItem>(strItem);
                 GameObject vp = viewPoints[i];
                 Vector3 angles = vp.transform.rotation.eulerAngles;
                 int yaw = (int)(angles.y + 0.5);
                 // Debug.Log("angle" + angles.x + ":" + angles.y + ":" + angles.z);
                 Vector3 pos = vp.transform.position;
                 GeoLocation loc = new GeoLocation(center, pos.x, pos.z);
-                if (i > 0)
-                {
-                    item.command = 16;
-                }
-                item.doJumpId = i + 1;
+                // NAV_WAYPOINT
+                item.command = 16;
+                item.doJumpId = i + 2;
                 item.Altitude = pos.y;
                 item.param = new double[] { hold, 0, 0, yaw, loc.lati, loc.longi, pos.y };
                 plan.mission.items[i] = item;
