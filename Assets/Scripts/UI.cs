@@ -123,6 +123,8 @@ public class UI : MonoBehaviour
             MissionItem itemTemplate = plan.mission.items[0];
             itemTemplate.AMSLAltAboveTerrain = 1122334455; // HACK
             string strItem = JsonUtility.ToJson(itemTemplate);
+
+            plan.mission.plannedHomePosition = new double[] { lati, longi, viewPoints[0].transform.position.y };
             plan.mission.items = new MissionItem[viewPoints.Length];
             for (int i=0; i<viewPoints.Length; i++)
             {
