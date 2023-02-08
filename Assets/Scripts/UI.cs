@@ -105,7 +105,7 @@ public class UI : MonoBehaviour
                 viewPoints = new GameObject[count * 2];
                 for (int i=0; i<count; i++)
                 {
-                    float angle = MathF.PI * 2 / (float)count * (float)i;
+                    float angle = MathF.PI * 2 / (float)count * (float)i + MathF.PI; // Start from South
                     float x = MathF.Cos(angle) * radius;
                     float y = MathF.Sin(angle) * radius;
                     Quaternion q = Quaternion.LookRotation(new Vector3(-x, 2, -y));
