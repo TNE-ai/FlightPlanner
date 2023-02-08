@@ -294,7 +294,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.17364816, y: 0, z: 0, w: 0.9848078}
-  m_LocalPosition: {x: 0, y: 3, z: -5}
+  m_LocalPosition: {x: 0, y: 4, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -521,6 +521,26 @@ MonoBehaviour:
   myPrefab: {fileID: 3749675222443307640, guid: 8a220b3b4fe604ddb8b80a3a3d707b3f, type: 3}
   viewPoints: []
   planFile: {fileID: 4900000, guid: 5964345df82ae47ffb44bccd46079bae, type: 3}
+  plan:
+    fileType: 
+    geoFence:
+      circles: []
+      polygons: []
+      version: 0
+    groundStation: 
+    mission:
+      cruiseSpeed: 0
+      firmwareType: 0
+      globalPlanAltitudeMode: 0
+      hoverSpeed: 0
+      vehicleType: 0
+      version: 0
+      items: []
+      plannedHomePosition: []
+    rallyPoints:
+      points: []
+      version: 0
+    version: 0
 --- !u!114 &1954580808
 MonoBehaviour:
   m_ObjectHideFlags: 0
