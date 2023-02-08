@@ -10,3 +10,9 @@ If you are happy with the plan, click “Save” to generate the plan file (“g
 The location of the file will be displayed on the debug console.
 
 You need to either open it directly from QGC or move that file to QGC’s Missions folder and open it.
+
+# Template
+
+When it generates a flight plan file, it first reads "plan.json" file at Assets/Plans, and uses it as a template.
+
+If you want to modify some default settings, it is probalby easier to modify this file than modifying the code. 
