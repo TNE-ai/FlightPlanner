@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,13 +10,13 @@ using UnityEngine.UIElements;
 public class MissionItem
 {
     public int AMSLAltAboveTerrain; // HACK: force null
-    public float Altitude;
+    public double Altitude;
     public int AltitudeMode;
     public bool autoContinue;
     public int command;
     public int doJumpId;
     public int frame;
-    public float[] param; // HACK: params is reserved
+    public double[] param; // HACK: params is reserved
     public string type;
 }
 
@@ -29,21 +30,21 @@ public class Mission
     public int vehicleType;
     public int version;
     public MissionItem[] items;
-    public float[] plannedHomePosition;
+    public double[] plannedHomePosition;
 }
 
 [System.Serializable]
 public class GeoFence
 {
-    public float[] circles;
-    public float[] polygons;
+    public double[] circles;
+    public double[] polygons;
     public int version;
 }
 
 [System.Serializable]
 public class RallyPoints
 {
-    public float[] points;
+    public double[] points;
     public int version;
 }
 
@@ -64,8 +65,8 @@ public class UI : MonoBehaviour
     public GameObject[] viewPoints = new GameObject[0];
     public TextAsset planFile;
     public FlightPlan plan;
-    public float lati = 47.6347922956f;
-    public float longi = -122.24058493262723f;
+    public double lati = 47.6347922956f;
+    public double longi = -122.24058493262723f;
 
     private void OnEnable()
     {
@@ -100,13 +101,13 @@ public class UI : MonoBehaviour
             {
                 Debug.Log("btnPlan.clicked");
                 int count = 24;
-                float radius = 3;
+                float radius = 3;  
                 viewPoints = new GameObject[count * 2];
                 for (int i=0; i<count; i++)
                 {
-                    float angle = Mathf.PI * 2 / (float)count * (float)i;
-                    float x = Mathf.Cos(angle) * radius;
-                    float y = Mathf.Sin(angle) * radius;
+                    float angle = MathF.PI * 2 / (float)count * (float)i;
+                    float x = MathF.Cos(angle) * radius;
+                    float y = MathF.Sin(angle) * radius;
                     Quaternion q = Quaternion.LookRotation(new Vector3(-x, 2, -y));
                     viewPoints[i] = Instantiate(myPrefab, new Vector3(x, 2.5f, y), q);
                     viewPoints[count + i] = Instantiate(myPrefab, new Vector3(x * 1.2f, 3.5f, y * 1.2f), q);
@@ -133,8 +134,8 @@ public class UI : MonoBehaviour
                     item.command = 16;
                 }
                 item.doJumpId = i + 1;
-                item.param = new float[] { 0, 0, 0, 90, lati + pos.x / 111000,
-                                           longi + pos.z / 111000 / Mathf.Cos(lati), pos.y };
+                item.param = new double[] { 0, 0, 0, 90, lati + (double)pos.x / 111000,
+                                           longi + (double)pos.z / 111000 / Math.Cos(lati), pos.y };
                 plan.mission.items[i] = item;
             }
 
