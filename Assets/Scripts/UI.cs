@@ -158,12 +158,13 @@ public class UI : MonoBehaviour
                 int yaw = (int)(angles.y + 0.5);
                 // Debug.Log("angle" + angles.x + ":" + angles.y + ":" + angles.z);
                 Vector3 pos = vp.transform.position;
+                GeoLocation loc = new GeoLocation(center, pos.x, pos.z);
                 if (i > 0)
                 {
                     item.command = 16;
                 }
                 item.doJumpId = i + 1;
-                GeoLocation loc = new GeoLocation(center, pos.x, pos.z);
+                item.Altitude = pos.y;
                 item.param = new double[] { 0, 0, 0, yaw, loc.lati, loc.longi, pos.y };
                 plan.mission.items[i] = item;
             }
