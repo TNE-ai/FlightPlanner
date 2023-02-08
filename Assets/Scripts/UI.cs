@@ -71,8 +71,8 @@ public struct GeoLocation
 
     public GeoLocation(GeoLocation anchor, float x, float y)
     {
-        lati = anchor.lati + (double)x / 111000;
-        longi = anchor.longi + (double)y / 111000 / Math.Cos(Math.PI * anchor.lati / 180);
+        lati = anchor.lati + (double)y / 111000;
+        longi = anchor.longi + (double)x / 111000 / Math.Cos(Math.PI * anchor.lati / 180);
     }
 }
 
@@ -126,7 +126,7 @@ public class UI : MonoBehaviour
             viewPoints = new GameObject[count * 2];
             for (int i=0; i<count; i++)
             {
-                float angle = 3 * MathF.PI / 2 - MathF.PI * 2 / (float)count * (float)i; // Start from South
+                float angle = 2 * MathF.PI / 2 - MathF.PI * 2 / (float)count * (float)i; // Start from South
                 float x = MathF.Sin(angle);
                 float y = MathF.Cos(angle);
                 Quaternion q = Quaternion.LookRotation(new Vector3(-x, 1, -y));
