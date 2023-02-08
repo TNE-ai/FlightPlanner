@@ -83,10 +83,10 @@ public class UI : MonoBehaviour
     public TextAsset planFile;
     public FlightPlan plan;
     public int count = 32;
-    public float radius = 3;
+    public float radius1 = 3;
+    public float radius2 = 3.5f;
     public float height1 = 2.5f;
     public float height2 = 3.5f;
-    public float ratio = 1.2f;
     public GeoLocation center = new GeoLocation(47.6347922956f, -122.24058493262723f );
 
     private void clear()
@@ -125,11 +125,11 @@ public class UI : MonoBehaviour
             for (int i=0; i<count; i++)
             {
                 float angle = 3 * MathF.PI / 2 - MathF.PI * 2 / (float)count * (float)i; // Start from South
-                float x = MathF.Sin(angle) * radius;
-                float y = MathF.Cos(angle) * radius;
-                Quaternion q = Quaternion.LookRotation(new Vector3(-x, 2, -y));
-                viewPoints[i] = Instantiate(myPrefab, new Vector3(x, height1, y), q);
-                viewPoints[count + i] = Instantiate(myPrefab, new Vector3(x * ratio, height2, y * ratio), q);
+                float x = MathF.Sin(angle);
+                float y = MathF.Cos(angle);
+                Quaternion q = Quaternion.LookRotation(new Vector3(-x, 1, -y));
+                viewPoints[i] = Instantiate(myPrefab, new Vector3(x * radius1, height1, y * radius1), q);
+                viewPoints[count + i] = Instantiate(myPrefab, new Vector3(x * radius2, height2, y * radius2), q);
             }
         };
         btnSave.clicked += () =>
