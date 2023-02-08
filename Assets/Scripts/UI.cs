@@ -82,13 +82,14 @@ public class UI : MonoBehaviour
     public GameObject[] viewPoints = new GameObject[0];
     public TextAsset planFile;
     public FlightPlan plan;
+    public double latitude = 47.7028601;
+    public double longitude = -122.1398441;
     public int count = 32;
     public float radius1 = 3;
     public float radius2 = 3.5f;
     public float height1 = 2.5f;
     public float height2 = 3.5f;
-    public double latitude = 47.7028601;
-    public double longitude = -122.1398441;
+    public float hold = 2.0f;
 
     private void clear()
     {
@@ -165,7 +166,7 @@ public class UI : MonoBehaviour
                 }
                 item.doJumpId = i + 1;
                 item.Altitude = pos.y;
-                item.param = new double[] { 0, 0, 0, yaw, loc.lati, loc.longi, pos.y };
+                item.param = new double[] { hold, 0, 0, yaw, loc.lati, loc.longi, pos.y };
                 plan.mission.items[i] = item;
             }
 
