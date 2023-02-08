@@ -64,8 +64,8 @@ public class UI : MonoBehaviour
     public GameObject[] viewPoints = new GameObject[0];
     public TextAsset planFile;
     public FlightPlan plan;
-    public float lati = (float)47.6347922956;
-    public float longi = (float)-122.24058493262723;
+    public float lati = 47.6347922956f;
+    public float longi = -122.24058493262723f;
 
     private void OnEnable()
     {
@@ -108,8 +108,8 @@ public class UI : MonoBehaviour
                     float x = Mathf.Cos(angle) * radius;
                     float y = Mathf.Sin(angle) * radius;
                     Quaternion q = Quaternion.LookRotation(new Vector3(-x, 2, -y));
-                    viewPoints[i] = Instantiate(myPrefab, new Vector3(x, (float)2.5, y), q);
-                    viewPoints[count + i] = Instantiate(myPrefab, new Vector3(x, (float)3.5, y), q);
+                    viewPoints[i] = Instantiate(myPrefab, new Vector3(x, 2.5f, y), q);
+                    viewPoints[count + i] = Instantiate(myPrefab, new Vector3(x * 1.2f, 3.5f, y * 1.2f), q);
                 }
             }
         };
@@ -120,7 +120,7 @@ public class UI : MonoBehaviour
                 return;
             }
             MissionItem itemTemplate = plan.mission.items[0];
-            itemTemplate.AMSLAltAboveTerrain = 1122334455;
+            itemTemplate.AMSLAltAboveTerrain = 1122334455; // HACK
             string strItem = JsonUtility.ToJson(itemTemplate);
             plan.mission.items = new MissionItem[viewPoints.Length];
             for (int i=0; i<viewPoints.Length; i++)
@@ -134,7 +134,7 @@ public class UI : MonoBehaviour
                 }
                 item.doJumpId = i + 1;
                 item.param = new float[] { 0, 0, 0, 90, lati + pos.x / 111000,
-                                           longi + pos.z / 111000 / Mathf.Sin(lati), 2 };
+                                           longi + pos.z / 111000 / Mathf.Cos(lati), pos.y };
                 plan.mission.items[i] = item;
             }
 
