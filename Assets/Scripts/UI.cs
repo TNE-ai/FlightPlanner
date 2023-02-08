@@ -59,14 +59,24 @@ public class FlightPlan
     public int version;
 }
 
+public struct GeoLocation
+{
+    public double lati;
+    public double longi;
+    public GeoLocation(double _lati, double _longi)
+    {
+        lati = _lati;
+        longi = _longi;
+    }
+}
+
 public class UI : MonoBehaviour
 {
     public GameObject myPrefab;
     public GameObject[] viewPoints = new GameObject[0];
     public TextAsset planFile;
     public FlightPlan plan;
-    public double lati = 47.6347922956f;
-    public double longi = -122.24058493262723f;
+    public GeoLocation center = new GeoLocation(47.6347922956f, -122.24058493262723f );
 
     private void OnEnable()
     {
@@ -124,7 +134,7 @@ public class UI : MonoBehaviour
             itemTemplate.AMSLAltAboveTerrain = 1122334455; // HACK
             string strItem = JsonUtility.ToJson(itemTemplate);
 
-            plan.mission.plannedHomePosition = new double[] { lati, longi, viewPoints[0].transform.position.y };
+            plan.mission.plannedHomePosition = new double[] { center.lati, center.longi, viewPoints[0].transform.position.y };
             plan.mission.items = new MissionItem[viewPoints.Length];
             for (int i=0; i<viewPoints.Length; i++)
             {
@@ -139,8 +149,8 @@ public class UI : MonoBehaviour
                     item.command = 16;
                 }
                 item.doJumpId = i + 1;
-                item.param = new double[] { 0, 0, 0, yaw, lati + (double)pos.x / 111000,
-                                           longi + (double)pos.z / 111000 / Math.Cos(lati), pos.y };
+                item.param = new double[] { 0, 0, 0, yaw, center.lati + (double)pos.x / 111000,
+                                           center.longi + (double)pos.z / 111000 / Math.Cos(center.lati), pos.y };
                 plan.mission.items[i] = item;
             }
 
