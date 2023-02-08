@@ -87,7 +87,8 @@ public class UI : MonoBehaviour
     public float radius2 = 3.5f;
     public float height1 = 2.5f;
     public float height2 = 3.5f;
-    public GeoLocation center = new GeoLocation(47.6347922956f, -122.24058493262723f );
+    public double latitude = 47.7028601;
+    public double longitude = -122.1398441;
 
     private void clear()
     {
@@ -138,6 +139,9 @@ public class UI : MonoBehaviour
             {
                 return;
             }
+
+            GeoLocation center = new GeoLocation(latitude, longitude);
+
             MissionItem itemTemplate = plan.mission.items[0];
             itemTemplate.AMSLAltAboveTerrain = 1122334455; // HACK
             string strItem = JsonUtility.ToJson(itemTemplate);
