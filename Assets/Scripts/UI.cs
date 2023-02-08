@@ -82,8 +82,17 @@ public class UI : MonoBehaviour
     public GameObject[] viewPoints = new GameObject[0];
     public TextAsset planFile;
     public FlightPlan plan;
+    public int count = 32;
     public GeoLocation center = new GeoLocation(47.6347922956f, -122.24058493262723f );
 
+    private void clear()
+    {
+        for (int i = 0; i < viewPoints.Length; i++)
+        {
+            Destroy(viewPoints[i]);
+        }
+        viewPoints = new GameObject[0];
+    }
     private void OnEnable()
     {
         Debug.Log("onEnable");
@@ -102,32 +111,22 @@ public class UI : MonoBehaviour
         btnClear.clicked += () =>
         {
             Debug.Log("btnClear.clicked");
-            if (viewPoints.Length > 0)
-            {
-                for (int i=0; i<viewPoints.Length; i++)
-                {
-                    Destroy(viewPoints[i]);
-                }
-                viewPoints = new GameObject[0];
-            }
+            clear();
         };
         btnPlan.clicked += () =>
         {
-            if (viewPoints.Length == 0)
+            Debug.Log("btnPlan.clicked");
+            clear();
+            float radius = 3;  
+            viewPoints = new GameObject[count * 2];
+            for (int i=0; i<count; i++)
             {
-                Debug.Log("btnPlan.clicked");
-                int count = 24;
-                float radius = 3;  
-                viewPoints = new GameObject[count * 2];
-                for (int i=0; i<count; i++)
-                {
-                    float angle = 3 * MathF.PI / 2 - MathF.PI * 2 / (float)count * (float)i; // Start from South
-                    float x = MathF.Sin(angle) * radius;
-                    float y = MathF.Cos(angle) * radius;
-                    Quaternion q = Quaternion.LookRotation(new Vector3(-x, 2, -y));
-                    viewPoints[i] = Instantiate(myPrefab, new Vector3(x, 2.5f, y), q);
-                    viewPoints[count + i] = Instantiate(myPrefab, new Vector3(x * 1.2f, 3.5f, y * 1.2f), q);
-                }
+                float angle = 3 * MathF.PI / 2 - MathF.PI * 2 / (float)count * (float)i; // Start from South
+                float x = MathF.Sin(angle) * radius;
+                float y = MathF.Cos(angle) * radius;
+                Quaternion q = Quaternion.LookRotation(new Vector3(-x, 2, -y));
+                viewPoints[i] = Instantiate(myPrefab, new Vector3(x, 2.5f, y), q);
+                viewPoints[count + i] = Instantiate(myPrefab, new Vector3(x * 1.2f, 3.5f, y * 1.2f), q);
             }
         };
         btnSave.clicked += () =>
