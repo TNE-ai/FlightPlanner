@@ -133,7 +133,8 @@ public class UI : MonoBehaviour
                     item.command = 16;
                 }
                 item.doJumpId = i + 1;
-                item.param = new float[] { 0, 0, 0, 90, lati + 0.001f * pos.x, longi + 0.001f * pos.z / Mathf.Sin(lati), 2 };
+                item.param = new float[] { 0, 0, 0, 90, lati + pos.x / 111000,
+                                           longi + pos.z / 111000 / Mathf.Sin(lati), 2 };
                 plan.mission.items[i] = item;
             }
 
