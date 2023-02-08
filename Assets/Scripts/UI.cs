@@ -72,7 +72,7 @@ public struct GeoLocation
     public GeoLocation(GeoLocation anchor, float x, float y)
     {
         lati = anchor.lati + (double)x / 111000;
-        longi = anchor.longi + (double)y / 111000 / Math.Cos(anchor.lati);
+        longi = anchor.longi + (double)y / 111000 / Math.Cos(Math.PI * anchor.lati / 180);
     }
 }
 
