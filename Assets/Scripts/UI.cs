@@ -152,7 +152,7 @@ public class UI : MonoBehaviour
             GeoLocation home = new GeoLocation(center, homePos.x * 1.5f, homePos.z * 1.5f);
             plan.mission.plannedHomePosition = new double[] { home.lati, home.longi, homePos.y };
             plan.mission.hoverSpeed = speed;
-            plan.mission.items = new MissionItem[viewPoints.Length];
+            plan.mission.items = new MissionItem[viewPoints.Length + 1];
 
             // NAV_TAKEOFF
             MissionItem item = JsonUtility.FromJson<MissionItem>(strItem);
@@ -160,6 +160,7 @@ public class UI : MonoBehaviour
             itemTemplate.Altitude = homePos.y;
             item.param = new double[] { hold, 0, 0, 0, home.lati, home.longi, homePos.y };
             item.doJumpId = 1;
+            plan.mission.items[0] = item;
 
             /*
             // CHANGE_SPEED
@@ -184,7 +185,7 @@ public class UI : MonoBehaviour
                 item.doJumpId = i + 2;
                 item.Altitude = pos.y;
                 item.param = new double[] { hold, 0, 0, yaw, loc.lati, loc.longi, pos.y };
-                plan.mission.items[i] = item;
+                plan.mission.items[i + 1] = item;
             }
 
             string saveFile = Application.persistentDataPath + "/generated.plan";
