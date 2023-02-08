@@ -84,7 +84,7 @@ public class UI : MonoBehaviour
     public FlightPlan plan;
     public double latitude = 47.7028601;
     public double longitude = -122.1398441;
-    public int count = 32;
+    public int count = 16;
     public float radius1 = 3;
     public float radius2 = 3.5f;
     public float height1 = 2.5f;
@@ -176,7 +176,7 @@ public class UI : MonoBehaviour
                 item = JsonUtility.FromJson<MissionItem>(strItem);
                 GameObject vp = viewPoints[i];
                 Vector3 angles = vp.transform.rotation.eulerAngles;
-                int yaw = (int)(angles.y + 0.5);
+                int yaw = (int)(angles.y + 90.5) % 360;
                 // Debug.Log("angle" + angles.x + ":" + angles.y + ":" + angles.z);
                 Vector3 pos = vp.transform.position;
                 GeoLocation loc = new GeoLocation(center, pos.x, pos.z);
