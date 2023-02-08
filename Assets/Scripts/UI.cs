@@ -68,6 +68,12 @@ public struct GeoLocation
         lati = _lati;
         longi = _longi;
     }
+
+    public GeoLocation(GeoLocation anchor, float x, float y)
+    {
+        lati = anchor.lati + (double)x / 111000;
+        longi = anchor.longi + (double)y / 111000 / Math.Cos(anchor.lati);
+    }
 }
 
 public class UI : MonoBehaviour
@@ -134,7 +140,9 @@ public class UI : MonoBehaviour
             itemTemplate.AMSLAltAboveTerrain = 1122334455; // HACK
             string strItem = JsonUtility.ToJson(itemTemplate);
 
-            plan.mission.plannedHomePosition = new double[] { center.lati, center.longi, viewPoints[0].transform.position.y };
+            Vector3 homePos = viewPoints[0].transform.position;
+            GeoLocation home = new GeoLocation(center, homePos.x * 1.5f, homePos.z * 1.5f);
+            plan.mission.plannedHomePosition = new double[] { home.lati, home.longi, homePos.y };
             plan.mission.items = new MissionItem[viewPoints.Length];
             for (int i=0; i<viewPoints.Length; i++)
             {
@@ -149,8 +157,8 @@ public class UI : MonoBehaviour
                     item.command = 16;
                 }
                 item.doJumpId = i + 1;
-                item.param = new double[] { 0, 0, 0, yaw, center.lati + (double)pos.x / 111000,
-                                           center.longi + (double)pos.z / 111000 / Math.Cos(center.lati), pos.y };
+                GeoLocation loc = new GeoLocation(center, pos.x, pos.z);
+                item.param = new double[] { 0, 0, 0, yaw, loc.lati, loc.longi, pos.y };
                 plan.mission.items[i] = item;
             }
 
