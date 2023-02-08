@@ -119,13 +119,21 @@ public class UI : MonoBehaviour
             {
                 return;
             }
-            MissionItem item = plan.mission.items[0]; // Template
-            item.AMSLAltAboveTerrain = 1122334455;
+            MissionItem itemTemplate = plan.mission.items[0];
+            itemTemplate.AMSLAltAboveTerrain = 1122334455;
+            string strItem = JsonUtility.ToJson(itemTemplate);
             plan.mission.items = new MissionItem[viewPoints.Length];
             for (int i=0; i<viewPoints.Length; i++)
             {
+                MissionItem item = JsonUtility.FromJson<MissionItem>(strItem);
                 GameObject vp = viewPoints[i];
-                item.param = new float[] { 0, 0, 0, 90, lati, longi, 2 };
+                Vector3 pos = vp.transform.position;
+                if (i > 0)
+                {
+                    item.command = 16;
+                }
+                item.doJumpId = i + 1;
+                item.param = new float[] { 0, 0, 0, 90, lati + 0.001f * pos.x, longi + 0.001f * pos.z, 2 };
                 plan.mission.items[i] = item;
             }
 
