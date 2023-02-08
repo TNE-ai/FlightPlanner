@@ -130,13 +130,16 @@ public class UI : MonoBehaviour
             {
                 MissionItem item = JsonUtility.FromJson<MissionItem>(strItem);
                 GameObject vp = viewPoints[i];
+                Vector3 angles = vp.transform.rotation.eulerAngles;
+                int yaw = (int)(angles.y + 0.5);
+                // Debug.Log("angle" + angles.x + ":" + angles.y + ":" + angles.z);
                 Vector3 pos = vp.transform.position;
                 if (i > 0)
                 {
                     item.command = 16;
                 }
                 item.doJumpId = i + 1;
-                item.param = new double[] { 0, 0, 0, 90, lati + (double)pos.x / 111000,
+                item.param = new double[] { 0, 0, 0, yaw, lati + (double)pos.x / 111000,
                                            longi + (double)pos.z / 111000 / Math.Cos(lati), pos.y };
                 plan.mission.items[i] = item;
             }
