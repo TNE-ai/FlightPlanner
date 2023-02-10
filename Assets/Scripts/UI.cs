@@ -10,14 +10,14 @@ using UnityEngine.UIElements;
 public class MissionItem
 {
     public string type;    // "SimpleItem"
-    public int AMSLAltAboveTerrain; // Altitude value shown to the user. HACK: force null
+    public double AMSLAltAboveTerrain; // Altitude value shown to the user. HACK: force null
     public double Altitude;
-    public int AltitudeMode;
-    public bool autoContinue;
-    public int command;    // MAV_CMD (16:MAV_CMD_NAV_WAYPOINT, 22:MAV_CMD_NAV_TAKEOFF)
-    public int doJumpId;   // The target id, auto-numbered from 1.
-    public int frame;      // MAV_FRAME (3:MAV_FRAME_GLOBAL_RELATIVE_ALT)
-    public double[] param; // HACK: params is reserved
+    public int AltitudeMode;  // 1:??
+    public bool autoContinue; // true
+    public int command;       // MAV_CMD (16:MAV_CMD_NAV_WAYPOINT, 22:MAV_CMD_NAV_TAKEOFF)
+    public int doJumpId;      // The target id, auto-numbered from 1.
+    public int frame;         // MAV_FRAME (3:MAV_FRAME_GLOBAL_RELATIVE_ALT)
+    public double[] param;    // HACK: params is reserved
 }
 
 [System.Serializable]
@@ -78,6 +78,8 @@ public struct GeoLocation
 
 public class UI : MonoBehaviour
 {
+    public const double NULL_VALUE = 112233.44f; // HACK to force null in json file
+
     public GameObject myPrefab;
     public GameObject[] viewPoints = new GameObject[0];
     public TextAsset planFile;
@@ -92,6 +94,7 @@ public class UI : MonoBehaviour
     public float height2 = 3.5f;
     public float hold = 2.0f;
     public float speed = 0.22352f;
+    public bool specifyYaw = true;
 
     private void clear()
     {
@@ -149,7 +152,7 @@ public class UI : MonoBehaviour
             GeoLocation center = new GeoLocation(latitude, longitude);
 
             MissionItem itemTemplate = plan.mission.items[0];
-            itemTemplate.AMSLAltAboveTerrain = 1122334455; // HACK
+            itemTemplate.AMSLAltAboveTerrain = NULL_VALUE;
             string strItem = JsonUtility.ToJson(itemTemplate);
 
             Vector3 homePos = viewPoints[0].transform.position;
@@ -162,7 +165,7 @@ public class UI : MonoBehaviour
             MissionItem item = JsonUtility.FromJson<MissionItem>(strItem);
             item.command = 22;
             itemTemplate.Altitude = homePos.y;
-            item.param = new double[] { hold, 0, 0, 0, home.lati, home.longi, homePos.y };
+            item.param = new double[] { hold, 0, 0, NULL_VALUE, home.lati, home.longi, homePos.y };
             item.doJumpId = 1;
             plan.mission.items[0] = item;
 
@@ -180,7 +183,7 @@ public class UI : MonoBehaviour
                 item = JsonUtility.FromJson<MissionItem>(strItem);
                 GameObject vp = viewPoints[i];
                 Vector3 angles = vp.transform.rotation.eulerAngles;
-                int yaw = (int)(angles.y + 90.5) % 360;
+                double yaw = specifyYaw ? (int)(angles.y + 90.5) % 360 : NULL_VALUE;
                 // Debug.Log("angle" + angles.x + ":" + angles.y + ":" + angles.z);
                 Vector3 pos = vp.transform.position;
                 GeoLocation loc = new GeoLocation(center, pos.x, pos.z);
@@ -197,7 +200,7 @@ public class UI : MonoBehaviour
             plan.groundStation = "Netdrone Planner 1";
             string jsonString = JsonUtility.ToJson(plan);
             jsonString = jsonString.Replace("param", "params"); // hack
-            jsonString = jsonString.Replace("1122334455", "null"); // hack
+            jsonString = jsonString.Replace(NULL_VALUE.ToString(), "null");
             File.WriteAllText(saveFile, jsonString);
         };
     }
