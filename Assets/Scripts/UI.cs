@@ -74,10 +74,9 @@ public class UI : MonoBehaviour
         // NAV_TAKEOFF
         MissionItem item = itemTemplate;
         item.command = 22;
-        itemTemplate.Altitude = homePos.y;
-        item.param = new double[] { hold, 0, 0, NULL_VALUE, home.lati, home.longi, homePos.y };
         item.doJumpId = 1;
         item.Altitude = homePos.y;
+        item.param = new double[] { hold, 0, 0, NULL_VALUE, home.lati, home.longi, homePos.y };
         plan.mission.items[0] = item;
 
         /*
@@ -91,7 +90,6 @@ public class UI : MonoBehaviour
 
         for (int i = 0; i < viewPoints.Length; i++)
         {
-            item = itemTemplate;
             GameObject vp = viewPoints[i];
             Vector3 angles = vp.transform.rotation.eulerAngles;
             double yaw = specifyYaw ? (int)(angles.y + 90.5) % 360 : NULL_VALUE;
@@ -99,6 +97,7 @@ public class UI : MonoBehaviour
             Vector3 pos = vp.transform.position;
             GeoLocation loc = new GeoLocation(center, pos.x, pos.z);
             // NAV_WAYPOINT
+            item = itemTemplate;
             item.command = 16;
             item.doJumpId = i + 2;
             item.Altitude = pos.y;
