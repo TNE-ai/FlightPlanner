@@ -64,7 +64,6 @@ public class UI : MonoBehaviour
 
         MissionItem itemTemplate = plan.mission.items[0];
         itemTemplate.AMSLAltAboveTerrain = NULL_VALUE;
-        string strItem = JsonUtility.ToJson(itemTemplate);
 
         Vector3 homePos = viewPoints[0].transform.position;
         GeoLocation home = new GeoLocation(center, homePos.x * 1.5f, homePos.z * 1.5f);
@@ -73,7 +72,7 @@ public class UI : MonoBehaviour
         plan.mission.items = new MissionItem[viewPoints.Length + 1];
 
         // NAV_TAKEOFF
-        MissionItem item = JsonUtility.FromJson<MissionItem>(strItem);
+        MissionItem item = itemTemplate;
         item.command = 22;
         itemTemplate.Altitude = homePos.y;
         item.param = new double[] { hold, 0, 0, NULL_VALUE, home.lati, home.longi, homePos.y };
@@ -92,7 +91,7 @@ public class UI : MonoBehaviour
 
         for (int i = 0; i < viewPoints.Length; i++)
         {
-            item = JsonUtility.FromJson<MissionItem>(strItem);
+            item = itemTemplate;
             GameObject vp = viewPoints[i];
             Vector3 angles = vp.transform.rotation.eulerAngles;
             double yaw = specifyYaw ? (int)(angles.y + 90.5) % 360 : NULL_VALUE;
