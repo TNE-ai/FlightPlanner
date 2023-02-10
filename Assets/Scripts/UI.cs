@@ -167,6 +167,7 @@ public class UI : MonoBehaviour
             itemTemplate.Altitude = homePos.y;
             item.param = new double[] { hold, 0, 0, NULL_VALUE, home.lati, home.longi, homePos.y };
             item.doJumpId = 1;
+            item.Altitude = homePos.y;
             plan.mission.items[0] = item;
 
             /*
@@ -197,7 +198,7 @@ public class UI : MonoBehaviour
 
             string saveFile = Application.persistentDataPath + "/generated.plan";
             Debug.Log("btnSave:" + saveFile);
-            plan.groundStation = "Netdrone Planner 1";
+            plan.groundStation = "Netdrones Flight Planner";
             string jsonString = JsonUtility.ToJson(plan);
             jsonString = jsonString.Replace("param", "params"); // hack
             jsonString = jsonString.Replace(NULL_VALUE.ToString(), "null");
