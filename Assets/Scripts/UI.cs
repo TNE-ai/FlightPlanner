@@ -59,23 +59,6 @@ public class FlightPlan
     public RallyPoints rallyPoints;
 }
 
-public struct GeoLocation
-{
-    public double lati;
-    public double longi;
-    public GeoLocation(double _lati, double _longi)
-    {
-        lati = _lati;
-        longi = _longi;
-    }
-
-    public GeoLocation(GeoLocation anchor, float x, float y)
-    {
-        lati = anchor.lati + (double)y / 111000;
-        longi = anchor.longi + (double)x / 111000 / Math.Cos(Math.PI * anchor.lati / 180);
-    }
-}
-
 public class UI : MonoBehaviour
 {
     public const double NULL_VALUE = 112233.44f; // HACK to force null in json file
