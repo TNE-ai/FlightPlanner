@@ -2,7 +2,7 @@
 // https://dev.qgroundcontrol.com/master/en/file_formats/plan.html
 
 [System.Serializable]
-public class MissionItem
+public struct MissionItem
 {
     public string type;    // "SimpleItem"
     public double AMSLAltAboveTerrain; // Altitude value shown to the user. HACK: force null
@@ -16,7 +16,7 @@ public class MissionItem
 }
 
 [System.Serializable]
-public class Mission
+public struct Mission
 {
     public int version;      // Current version is 2
     public int firmwareType; // 12 = MAV_AUTOPILOT_PX4
@@ -29,7 +29,7 @@ public class Mission
 }
 
 [System.Serializable]
-public class GeoFence
+public struct GeoFence
 {
     public double[] circles;
     public double[] polygons;
@@ -37,14 +37,14 @@ public class GeoFence
 }
 
 [System.Serializable]
-public class RallyPoints
+public struct RallyPoints
 {
     public double[] points;
     public int version;
 }
 
 [System.Serializable]
-public class FlightPlan
+public struct FlightPlan
 {
     public string fileType;      // Must be "Plan"
     public string groundStation; // The name of the ground station which created this file
